@@ -1,4 +1,5 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
+import { users } from './data/users';
 
 import { json } from 'body-parser';
 
