@@ -4,9 +4,17 @@ import { json } from 'body-parser';
 
 const app: Application = express();
 
-app.use(json());
+app.use(json());  //req.body
 
-app.get('/', (req: Request, res: Response) => {
+app.use(express.static('public'));
+
+app.use((req, res, next) => {
+    console.log(req.url);
+    next();
+});
+
+
+app.get('/hello', (req: Request, res: Response) => {
     res.send('hello');
 });
 
