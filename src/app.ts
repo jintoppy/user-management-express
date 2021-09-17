@@ -6,7 +6,7 @@ import { json } from 'body-parser';
 const app: Application = express();
 
 app.use(json());  //req.body
-
+app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.use((req, res, next) => {
@@ -15,7 +15,10 @@ app.use((req, res, next) => {
 });
 
 app.get('/users', (req: Request, res: Response) => {
-    res.json(users);
+    res.render('users', {
+        title: 'MEAN',
+        users: ['abc', 'def']
+    });
 });
 
 app.get('/hello', (req: Request, res: Response) => {
