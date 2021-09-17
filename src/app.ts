@@ -1,5 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { users } from './data/users';
+import apiRouter from './routes';
 
 import { json } from 'body-parser';
 
@@ -17,9 +18,11 @@ app.use((req, res, next) => {
 app.get('/users', (req: Request, res: Response) => {
     res.render('users', {
         title: 'MEAN',
-        users: ['abc', 'def']
+        users
     });
 });
+
+app.use('/api', apiRouter);
 
 app.get('/hello', (req: Request, res: Response) => {
     res.send('hello');

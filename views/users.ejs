@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body>    
     This is users page
     <h1><%= title %></h1>
-    <% users.forEach(user => { %>
-        <h2><%= user %></h2>
-    <% })  %>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Industry </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.name %> </td>
+                <td><%= user.industry %> </td>
+                <td>
+                    <button>View Details</button>
+                    <button>Edit</button>
+                </td>
+            </tr>
+            <% })  %>
+        </tbody>
+    </table>
+    
+    
 </body>
 </html>
