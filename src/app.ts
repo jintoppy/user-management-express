@@ -22,7 +22,9 @@ app.use(session({
 
 app.use(json());  //req.body
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.use(express.static('public', {
+    extensions: ['html']
+}));
 
 
 app.use((req, res, next) => {
