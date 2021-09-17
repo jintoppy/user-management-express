@@ -14,6 +14,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/users', (req: Request, res: Response) => {
+    res.json(users);
+});
 
 app.get('/hello', (req: Request, res: Response) => {
     res.send('hello');
