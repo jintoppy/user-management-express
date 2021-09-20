@@ -1,7 +1,11 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { users } from './data/users';
 import apiRouter from './routes';
 import session, { SessionData } from 'express-session';
+
+require('dotenv').config()
+
 
 declare module 'express-session' {
     interface SessionData {
@@ -13,7 +17,13 @@ declare module 'express-session' {
 import { json } from 'body-parser';
 
 const app: Application = express();
+const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
+const mongoUrl = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
 
+mongoose.connect(mongoUrl)
+    .then(() => {
+        console.log('db connected');
+    });
 
 app.use(session({
     secret: 'my secret',
