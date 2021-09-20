@@ -1,23 +1,61 @@
 import { Request, Response } from 'express';
 import { users } from '../data/users';
+import User, { IUser } from '../models/User';
+import Profile, { IProfile } from '../models/Profile';
+
 
 export const getUsers = (req: Request, res: Response) => {
-    res.json(users);
+    User
+    .find({})
+    // .select('name industry')
+    .limit(5)    
+    .populate('profile')
+    .exec((err: any, users: IUser[]) => {
+        if(err){
+            console.log(err);
+            res.status(500).send({msg: err});
+            return;
+        }
+        res.json(users);
+    });
+
+
+
+    // User.find({}, 'name industry', {
+    //     limit: 5
+    // }, (err: any, users: IUser[]) => {
+    //     if(err){
+    //         res.status(500).send({msg: err});
+    //         return;
+    //     }
+    //     res.json(users);
+    // });    
 };
 
 export const getUser = (req: Request, res: Response) => {    
     const { userId } = req.params;
-    const matchingUser = users.find(u => u.id == parseInt(userId));
-    res.json(matchingUser);
+    User.findById(userId, (err: any, user: IUser) => {
+        if(err){
+            res.status(500).send({msg: err});
+            return;
+        }
+        res.json(user);
+    });
 };
 
-export const addUser = (req: Request, res: Response) => {
-    const newUser = req.body;
-    const newId = users[users.length - 1].id + 1;
-    users.push({
-        id: newId,
-        ...newUser
+export const addUser = async (req: Request, res: Response) => {
+    const {name, industry} = req.body;
+    const doc = new User({
+        name,
+        industry
     });
-    res.send({status: 'success'});
+    try{
+        const user = await doc.save();
+        res.send(user);
+    }
+    catch(e){
+        res.status(500).send(e);
+    }
+    
 };
 
