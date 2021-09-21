@@ -6,10 +6,14 @@ import User, { IUser } from '../models/User';
 export const getUsers = (req: Request, res: Response) => {
     User
     .find({        
+        $or: [
+            { name: { $eq: 'Salman Khan' }},
+            { name: { $eq: 'Rajnikh' }}    
+        ]
     })
     // .select('name industry')
     .limit(5)    
-    .populate('profile', 'email phone')
+    .populate('profile')
     .exec((err: any, users: IUser[]) => {
         if(err){
             console.log(err);
