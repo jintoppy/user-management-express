@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { users } from './data/users';
 import apiRouter from './routes';
 import session, { SessionData } from 'express-session';
-
+import { initializeModels } from './models';
 require('dotenv').config()
 
 
@@ -24,6 +24,7 @@ mongoose.connect(mongoUrl)
     .then(() => {
         console.log('db connected');
     });
+initializeModels();
 
 app.use(session({
     secret: 'my secret',

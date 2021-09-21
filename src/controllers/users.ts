@@ -1,21 +1,24 @@
 import { Request, Response } from 'express';
 import { users } from '../data/users';
 import User, { IUser } from '../models/User';
-import Profile, { IProfile } from '../models/Profile';
 
 
 export const getUsers = (req: Request, res: Response) => {
     User
-    .find({})
+    .find({        
+    })
     // .select('name industry')
     .limit(5)    
-    .populate('profile')
+    .populate('profile', 'email phone')
     .exec((err: any, users: IUser[]) => {
         if(err){
             console.log(err);
             res.status(500).send({msg: err});
             return;
         }
+        if(users.length > 0){
+            console.log(users[0].actor);
+        }        
         res.json(users);
     });
 

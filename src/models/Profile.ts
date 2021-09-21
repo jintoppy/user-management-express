@@ -4,7 +4,8 @@ import { IUser } from './User';
 export interface IProfile {
     email: string;
     phone: string;
-    user: IUser
+    user: IUser;
+    contact?: string
 }
 
 const profileSchema = new Schema<IProfile>({
